@@ -3,6 +3,7 @@
 import { MongoClient } from "mongodb";
 
 export default async function handler(req, res) {
+    debugger;
     if (req.method === "POST") {
         const { data } = req.body;
 
