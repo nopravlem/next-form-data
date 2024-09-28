@@ -13,7 +13,7 @@ import {
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
 import { TagData } from "@/lib/types";
-import { Form, ImageUpload } from "@/lib/elements";
+import { Flex, Form, ImageUpload } from "@/lib/elements";
 
 const FormPage = () => {
   const [tags, setTags] = useState<TagData[]>([]);
@@ -59,12 +59,75 @@ const FormPage = () => {
     setImages((images) => images.filter((img) => img != img_src));
   };
 
+  const [inputData, setInputData] = useState("");
+  const handleSaveData = async () => {
+    const response = await fetch("/api/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+      body: JSON.stringify({ name: inputData }),
+    });
+
+    if (response.ok) {
+      alert("Data saved successfully!");
+      setInputData("");
+    } else {
+      alert("Something went wrdfgdgong!");
+    }
+  };
+
+  const getMovies = async () => {
+    const response = await fetch("/api/users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      alert("Data saved successfully!");
+      setInputData("");
+    } else {
+      alert("Something went wrdfgdgong!");
+    }
+  };
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    // console.log(e.currentTarget.value)
+    debugger;
+    fetch("/api/users/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tags: tags,
+      })
+    })
+  }
+
   return (
-    <Box display="flex" flexDirection="column" margin="4rem 6rem">
+    <Flex flexDirection="column" margin="4rem 6rem">
       <Typography variant="h3" fontSize="2.5rem" textAlign="center">
         Welcome to an Example Form!
       </Typography>
-      <Form>
+      {/* Basic way to create form */}
+      {/* <form method="post" encType="multipart/form-data" action="http://localhost:3000">
+        <input type="text" name="name" />
+        <button type="submit">Submit</button>
+      </form> */}
+
+      <input
+        type="text"
+        value={inputData}
+        onChange={(e) => setInputData(e.target.value)}
+      />
+      <button onClick={handleSaveData}>Save Data</button>
+
+      <Button onClick={getMovies}>Get Movie Data</Button>
+
+      <Form method="POST">
         {/* Name */}
         <FormControl margin="normal" sx={{ width: "500px" }}>
           <InputLabel htmlFor="name-input">Name</InputLabel>
@@ -121,28 +184,33 @@ const FormPage = () => {
             />
           </Button>
 
-          <Box display="flex" flexDirection="column" alignItems="flex-start">
+          <Flex display="flex" flexDirection="column" alignItems="flex-start">
             {images.map((img_src, idx) => (
               <Chip
                 key={idx}
                 label={img_src}
                 onDelete={removeImage(img_src)}
-                sx={{ marginTop: "0.5rem" }}
+                sx={{
+                  marginTop: "0.5rem",
+                  borderRadius: "4px",
+                  padding: "0.5rem",
+                }}
               />
             ))}
-          </Box>
+          </Flex>
         </FormControl>
 
         {/* Submit Button */}
         <Button
           type="submit"
           variant="outlined"
+          onClick={handleSubmit}
           sx={{ marginTop: "2rem", borderRadius: "50px" }}
         >
           Submit
         </Button>
       </Form>
-    </Box>
+    </Flex>
   );
 };
 

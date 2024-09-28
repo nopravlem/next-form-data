@@ -1,4 +1,9 @@
 import emotionStyled from "@emotion/styled";
+import { Box } from "@mui/material";
+
+export const Flex = emotionStyled(Box)`
+  display: flex;
+`;
 
 export const Form = emotionStyled.form`
   display: flex;
