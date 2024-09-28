@@ -10,17 +10,17 @@ I deployed using Vercel, so you can access the site [here](https://next-form-dat
 
 ![Screenshot 2024-09-28 at 9 39 04 AM](https://github.com/user-attachments/assets/b976c53f-a473-4ead-8c50-d60c1a32768a)
 
-## Run this program
+## Run locally
 If you'd like to run this program locally, clone this project and run one of these commands:
 
 ```bash
+npm install
 npm run dev
-# or
+```
+OR
+```bash
+yarn install
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
