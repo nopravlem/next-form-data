@@ -1,5 +1,6 @@
 "use client";
 import { ChangeEvent, KeyboardEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
 import {
   Box,
@@ -16,6 +17,7 @@ import { TagData } from "@/lib/types";
 import { Flex, Form, ImageUpload } from "@/lib/elements";
 
 const FormPage = () => {
+  const router = useRouter();
   const [tags, setTags] = useState<TagData[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
@@ -77,7 +79,7 @@ const FormPage = () => {
     // });
 
     // ~~~~~ OPTION: convert to all json before POST ~~~~~~
-    const response = await fetch("/api/campaign/", {
+    const response = await fetch("/api/campaigns/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -89,8 +91,9 @@ const FormPage = () => {
         images: images,
       }),
     });
-    if (response) {
-      alert("Data saved successfully!");
+    
+    if (response.ok) {
+      router.push("/campaign")
     } else {
       alert("Something went wrong!");
     }

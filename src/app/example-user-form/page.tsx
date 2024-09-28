@@ -18,7 +18,7 @@ const UserForm = () => {
       console.log(db_users);
       setUsers(db_users.map((usr: any) => usr.name));
     } else {
-      alert("Something went wrdfgdgong!");
+      alert("Something went wrong!");
     }
   };
 

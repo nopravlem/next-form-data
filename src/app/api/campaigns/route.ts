@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from "next/server";
 export const POST = async (req: NextRequest) => {
   // ~~~~~ OPTION: request sent as json ~~~~~
   const campaign_data = await req.json();
-  console.log(campaign_data);
 
   // ~~~~~ OPTION: request sent in form data ~~~~~
   // const formData = await req.formData();
@@ -21,5 +20,22 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ message: "Data saved successfully!" });
   } catch (error) {
     console.error(error);
+  }
+};
+
+export const GET = async () => {
+  try {
+    const client = await clientPromise;
+    const db = client.db("sample_mflix");
+    const movies = await db
+      .collection("campaigns")
+      .find({})
+      .sort({ _id: -1 }) // 1 for asc and -1 for desc -- newest addition first
+      .toArray();
+    
+    return NextResponse.json(movies);
+    
+  } catch (e) {
+    console.error(e);
   }
 };

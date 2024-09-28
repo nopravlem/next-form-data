@@ -2,7 +2,7 @@ import clientPromise from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 // TEST GET: using users collection in sample_mflix database MongoDB to understand routes
-export const GET = async (props: any) => {
+export const GET = async () => {
   try {
     const client = await clientPromise;
     const db = client.db("sample_mflix");
