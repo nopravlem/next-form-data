@@ -59,79 +59,36 @@ const FormPage = () => {
     setImages((images) => images.filter((img) => img != img_src));
   };
 
-  const [inputData, setInputData] = useState("");
-  const handleSaveData = async () => {
-    const response = await fetch("/api/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: JSON.stringify({ name: inputData }),
-    });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-    if (response.ok) {
-      alert("Data saved successfully!");
-      setInputData("");
-    } else {
-      alert("Something went wrdfgdgong!");
-    }
+    const formData = new FormData(e.target as HTMLFormElement);
+    // formData.forEach((value, key) => console.log(`${key}: ${value}\n`));
+    // formData.append("tags", tags);
+    // formData.append("images", images);
+
+    // fetch("/api/users/", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     tags: tags,
+    //   }),
+    // });
   };
-
-  const getMovies = async () => {
-    const response = await fetch("/api/users", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    if (response.ok) {
-      alert("Data saved successfully!");
-      setInputData("");
-    } else {
-      alert("Something went wrdfgdgong!");
-    }
-  };
-
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    // console.log(e.currentTarget.value)
-    debugger;
-    fetch("/api/users/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tags: tags,
-      })
-    })
-  }
 
   return (
     <Flex flexDirection="column" margin="4rem 6rem">
       <Typography variant="h3" fontSize="2.5rem" textAlign="center">
         Welcome to an Example Form!
       </Typography>
-      {/* Basic way to create form */}
-      {/* <form method="post" encType="multipart/form-data" action="http://localhost:3000">
-        <input type="text" name="name" />
-        <button type="submit">Submit</button>
-      </form> */}
 
-      <input
-        type="text"
-        value={inputData}
-        onChange={(e) => setInputData(e.target.value)}
-      />
-      <button onClick={handleSaveData}>Save Data</button>
-
-      <Button onClick={getMovies}>Get Movie Data</Button>
-
-      <Form method="POST">
+      <Form method="POST" onSubmit={handleSubmit}>
         {/* Name */}
         <FormControl margin="normal" sx={{ width: "500px" }}>
           <InputLabel htmlFor="name-input">Name</InputLabel>
-          <OutlinedInput id="name-input" label="Name" />
+          <OutlinedInput id="name-input" label="Name" name="name" />
         </FormControl>
 
         {/* Description */}
@@ -140,6 +97,7 @@ const FormPage = () => {
           <OutlinedInput
             id="description-input"
             label="Description"
+            name="description"
             multiline
             rows={4}
           />
@@ -179,7 +137,7 @@ const FormPage = () => {
             Upload files
             <ImageUpload
               type="file"
-              onChange={(e) => uploadImages(e)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => uploadImages(e)}
               multiple
             />
           </Button>
@@ -204,7 +162,6 @@ const FormPage = () => {
         <Button
           type="submit"
           variant="outlined"
-          onClick={handleSubmit}
           sx={{ marginTop: "2rem", borderRadius: "50px" }}
         >
           Submit
