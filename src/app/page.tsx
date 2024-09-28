@@ -20,6 +20,7 @@ const FormPage = () => {
   const [images, setImages] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
 
+  // ~~~~~ TAGS: ADD & DELETE ~~~~~~
   const handleInputChange = (
     e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
@@ -44,6 +45,7 @@ const FormPage = () => {
     setTags((tags) => tags.filter((tag) => tag_data.key !== tag.key));
   };
 
+  // ~~~~~ IMAGES: ADD & DELETE ~~~~~~
   const uploadImages = (e: ChangeEvent<HTMLInputElement>) => {
     const new_images = e.target.files;
     if (!new_images) return;
@@ -61,21 +63,37 @@ const FormPage = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const formData = new FormData(e.target as HTMLFormElement);
-    // formData.forEach((value, key) => console.log(`${key}: ${value}\n`));
-    // formData.append("tags", tags);
-    // formData.append("images", images);
 
-    // fetch("/api/users/", {
+    // ~~~~~ OPTION: convert to all form data before POST ~~~~~~
+    // const tags_blob = new Blob([JSON.stringify(tags)]);
+    // const images_blob = new Blob([JSON.stringify(images)]);
+
+    // formData.append("tags", tags_blob);
+    // formData.append("images", images_blob);
+    // const response = await fetch("/api/campaign", {
     //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     tags: tags,
-    //   }),
+    //   body: formData,
     // });
+
+    // ~~~~~ OPTION: convert to all json before POST ~~~~~~
+    const response = await fetch("/api/campaign/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: formData.get('name'),
+        description: formData.get('description'),
+        tags: tags,
+        images: images,
+      }),
+    });
+    if (response) {
+      alert("Data saved successfully!");
+    } else {
+      alert("Something went wrong!");
+    }
   };
 
   return (

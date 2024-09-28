@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 const UserForm = () => {
   const [users, setUsers] = useState<string[]>([]);
@@ -14,7 +15,7 @@ const UserForm = () => {
 
     if (response.ok) {
       let db_users = await response.json();
-      console.log(db_users)
+      console.log(db_users);
       setUsers(db_users.map((usr: any) => usr.name));
     } else {
       alert("Something went wrdfgdgong!");
@@ -56,6 +57,10 @@ const UserForm = () => {
       {users.map((user, idx) => (
         <p key={idx}>{user}</p>
       ))}
+
+      <p>
+        <Link href="/">Go back to main page!</Link>
+      </p>
     </div>
   );
 };
