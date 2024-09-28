@@ -73,52 +73,55 @@ const FormPage = () => {
 
     // formData.append("tags", tags_blob);
     // formData.append("images", images_blob);
-    // const response = await fetch("/api/campaign", {
+    // const response = await fetch("/api/blogs", {
     //   method: "POST",
     //   body: formData,
     // });
 
     // ~~~~~ OPTION: convert to all json before POST ~~~~~~
-    const response = await fetch("/api/campaigns/", {
+    const response = await fetch("/api/blogs/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        name: formData.get('name'),
-        description: formData.get('description'),
+        title: formData.get("title"),
+        content: formData.get("content"),
         tags: tags,
         images: images,
       }),
     });
-    
+
     if (response.ok) {
-      router.push("/campaign")
+      router.push("/blog");
     } else {
       alert("Something went wrong!");
     }
   };
 
   return (
-    <Flex flexDirection="column" margin="4rem 6rem">
+    <Flex flexDirection="column" margin="4rem 6rem" alignItems="center">
       <Typography variant="h3" fontSize="2.5rem" textAlign="center">
-        Welcome to an Example Form!
+        Welcome! Add a new blog!
+      </Typography>
+      <Typography variant="body1">
+        Example of a form connected to MongoDB
       </Typography>
 
       <Form method="POST" onSubmit={handleSubmit}>
-        {/* Name */}
+        {/* Title */}
         <FormControl margin="normal" sx={{ width: "500px" }}>
-          <InputLabel htmlFor="name-input">Name</InputLabel>
-          <OutlinedInput id="name-input" label="Name" name="name" />
+          <InputLabel htmlFor="title-input">Title</InputLabel>
+          <OutlinedInput id="title-input" label="Name" name="title" />
         </FormControl>
 
-        {/* Description */}
+        {/* Content */}
         <FormControl margin="normal" sx={{ width: "500px" }}>
-          <InputLabel htmlFor="description-input">Description</InputLabel>
+          <InputLabel htmlFor="content-input">Content</InputLabel>
           <OutlinedInput
-            id="description-input"
-            label="Description"
-            name="description"
+            id="content-input"
+            label="Content"
+            name="content"
             multiline
             rows={4}
           />

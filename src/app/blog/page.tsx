@@ -1,19 +1,19 @@
 "use client";
 import { Flex } from "@/lib/elements";
-import { Campaign } from "@/lib/types";
+import { Blog } from "@/lib/types";
 import theme from "@/theme";
 import { Box, Button, Chip, Typography } from "@mui/material";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-const ListCampaigns = () => {
-  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+const BlogList = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
   useEffect(() => {
-    handleGetCampaigns();
+    handleGetBlogs();
   }, []);
 
-  const handleGetCampaigns = async () => {
-    const response = await fetch("/api/campaigns/", {
+  const handleGetBlogs = async () => {
+    const response = await fetch("/api/blogs/", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -21,14 +21,14 @@ const ListCampaigns = () => {
     });
 
     if (response.ok) {
-      let db_campaigns = await response.json();
-      setCampaigns(
-        db_campaigns.map((campaign: any) => {
+      let db_blogs = await response.json();
+      setBlogs(
+        db_blogs.map((blog: any) => {
           return {
-            name: campaign.name,
-            description: campaign.description,
-            tags: campaign.tags,
-            images: campaign.images,
+            title: blog.title,
+            content: blog.content,
+            tags: blog.tags,
+            images: blog.images,
           };
         })
       );
@@ -40,11 +40,11 @@ const ListCampaigns = () => {
   return (
     <Flex flexDirection="column" margin="4rem 6rem" alignItems="center">
       <Typography variant="h3" fontSize="2.5rem" textAlign="center">
-        Campaigns List
+        All Blogs
       </Typography>
 
       <Flex flexDirection="column" width="500px" marginTop="2rem">
-        {campaigns.map((camp, idx) => (
+        {blogs.map((blog, idx) => (
           <Flex
             key={idx}
             border="2px solid black"
@@ -55,16 +55,16 @@ const ListCampaigns = () => {
             flexDirection="column"
           >
             <Flex>
-              <Typography variant="body1">Name:</Typography>
+              <Typography variant="body1">Title:</Typography>
               <Typography variant="body1" marginLeft="0.25rem" fontWeight={500}>
-                {camp.name}
+                {blog.title}
               </Typography>
             </Flex>
 
             <Flex>
-              <Typography variant="body1">Description:</Typography>
+              <Typography variant="body1">Content:</Typography>
               <Typography variant="body1" marginLeft="0.25rem" fontWeight={500}>
-                {camp.description}
+                {blog.content}
               </Typography>
             </Flex>
 
@@ -75,7 +75,7 @@ const ListCampaigns = () => {
             >
               <Typography variant="body1">Tags:</Typography>
               <Box marginLeft="0.25rem">
-                {camp.tags.map((tag) => (
+                {blog.tags.map((tag) => (
                   <Chip
                     key={tag.key}
                     color="primary"
@@ -93,7 +93,7 @@ const ListCampaigns = () => {
             >
               <Typography variant="body1">Images:</Typography>
               <Flex marginLeft="0.25rem" flexDirection="column">
-                {camp.images.map((img_src, idx) => (
+                {blog.images.map((img_src, idx) => (
                   <Chip
                     key={idx}
                     label={img_src}
@@ -111,10 +111,10 @@ const ListCampaigns = () => {
       </Flex>
 
       <Link href="/">
-        <Button variant="outlined">Add another campaign!</Button>
+        <Button variant="outlined">Add another blog!</Button>
       </Link>
     </Flex>
   );
 };
 
-export default ListCampaigns;
+export default BlogList;
