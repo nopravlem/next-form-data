@@ -1,5 +1,7 @@
-I created a form using NextJS (styled with Material UI) connected to MongoDB.
+I created a form using NextJS and connected it to MongoDB.
 I deployed using Vercel, so you can access the site [here](https://next-form-data-six.vercel.app/).
+
+This is using NextJS's App Router,and everything is styled with Material UI
 
 ## Demo
 1. Type in information, submit data, and you'll be redirected
