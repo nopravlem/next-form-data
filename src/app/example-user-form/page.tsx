@@ -3,6 +3,13 @@
 import { useState } from "react";
 import Link from "next/link";
 
+type User = {
+  _id: string;
+  name: string;
+  email: string;
+  password: string;
+}
+
 const UserForm = () => {
   const [users, setUsers] = useState<string[]>([]);
   const handleGetUsers = async () => {
@@ -14,9 +21,8 @@ const UserForm = () => {
     });
 
     if (response.ok) {
-      let db_users = await response.json();
-      console.log(db_users);
-      setUsers(db_users.map((usr: any) => usr.name));
+      const db_users = await response.json();
+      setUsers(db_users.map((usr: User) => usr.name));
     } else {
       alert("Something went wrong!");
     }

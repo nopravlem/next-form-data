@@ -21,9 +21,9 @@ const BlogList = () => {
     });
 
     if (response.ok) {
-      let db_blogs = await response.json();
+      const db_blogs = await response.json();
       setBlogs(
-        db_blogs.map((blog: any) => {
+        db_blogs.map((blog: Blog) => {
           return {
             title: blog.title,
             content: blog.content,
