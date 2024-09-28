@@ -100,23 +100,32 @@ const FormPage = () => {
   };
 
   return (
-    <Flex flexDirection="column" margin="4rem 6rem" alignItems="center">
-      <Typography variant="h3" fontSize="2.5rem" textAlign="center">
+    <Flex
+      flexDirection="column"
+      margin={["4rem 3rem", "4rem 6rem"]}
+      alignItems="center"
+    >
+      <Typography
+        variant="h3"
+        fontSize={["2rem", "2.5rem"]}
+        textAlign="center"
+        width={["263px", "416px", "auto"]}
+      >
         Welcome! Add a new blog!
       </Typography>
-      <Typography variant="body1">
+      <Typography variant="body1" textAlign="center" width={["263px", "auto"]}>
         Example of a form connected to MongoDB
       </Typography>
 
       <Form method="POST" onSubmit={handleSubmit}>
         {/* Title */}
-        <FormControl margin="normal" sx={{ width: "500px" }}>
+        <FormControl margin="normal" sx={{ width: "80vw", maxWidth: "500px" }}>
           <InputLabel htmlFor="title-input">Title</InputLabel>
           <OutlinedInput id="title-input" label="Name" name="title" />
         </FormControl>
 
         {/* Content */}
-        <FormControl margin="normal" sx={{ width: "500px" }}>
+        <FormControl margin="normal" sx={{ width: "80vw", maxWidth: "500px" }}>
           <InputLabel htmlFor="content-input">Content</InputLabel>
           <OutlinedInput
             id="content-input"
@@ -128,7 +137,7 @@ const FormPage = () => {
         </FormControl>
 
         {/* Tags */}
-        <FormControl margin="normal" sx={{ width: "500px" }}>
+        <FormControl margin="normal" sx={{ width: "80vw", maxWidth: "500px" }}>
           <InputLabel htmlFor="tag-input">Tags</InputLabel>
           <OutlinedInput
             id="tag-input"
@@ -151,14 +160,14 @@ const FormPage = () => {
         </FormControl>
 
         {/* Image Upload */}
-        <FormControl margin="normal" sx={{ width: "500px" }}>
+        <FormControl margin="normal" sx={{ width: "80vw", maxWidth: "500px" }}>
           <Button
             component="label"
             variant="contained"
             startIcon={<CloudUploadIcon />}
             sx={{ width: "fit-content" }}
           >
-            Upload files
+            Upload images
             <ImageUpload
               type="file"
               onChange={(e: ChangeEvent<HTMLInputElement>) => uploadImages(e)}

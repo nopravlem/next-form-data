@@ -38,12 +38,17 @@ const BlogList = () => {
   };
 
   return (
-    <Flex flexDirection="column" margin="4rem 6rem" alignItems="center">
+    <Flex flexDirection="column" margin="4rem 3rem" alignItems="center">
       <Typography variant="h3" fontSize="2.5rem" textAlign="center">
         All Blogs
       </Typography>
 
-      <Flex flexDirection="column" width="500px" marginTop="2rem">
+      <Flex
+        flexDirection="column"
+        width="90vw"
+        maxWidth="500px"
+        marginTop="2rem"
+      >
         {blogs.map((blog, idx) => (
           <Flex
             key={idx}
@@ -111,7 +116,9 @@ const BlogList = () => {
       </Flex>
 
       <Link href="/">
-        <Button variant="outlined">Add another blog!</Button>
+        <Button variant="outlined" sx={{ width: "300px" }}>
+          Add another blog!
+        </Button>
       </Link>
     </Flex>
   );
