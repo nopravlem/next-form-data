@@ -11,7 +11,12 @@ I deployed using Vercel, so you can access the site [here](https://next-form-dat
 ![Screenshot 2024-09-28 at 9 39 04 AM](https://github.com/user-attachments/assets/b976c53f-a473-4ead-8c50-d60c1a32768a)
 
 ## Run locally
-If you'd like to run this program locally, clone this project and run one of these commands:
+If you'd like to run this program locally, clone this project and create a `.env.local` file and in `MONGO_DB_URI`:
+```bash
+MONGO_DB_URI="mongodb+srv://pravtadikonda410:<my_secret_password>@cluster0.abc123.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+```
+
+Then, run one of these commands:
 
 ```bash
 npm install
