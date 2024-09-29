@@ -30,7 +30,7 @@ const BlogList = () => {
   };
 
   const handleDelete = async (id: string) => {
-    const response = await fetch(`/api/blogs/?id=${id}`, {
+    const response = await fetch(`/api/blogs/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
