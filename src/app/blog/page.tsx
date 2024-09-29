@@ -2,7 +2,8 @@
 import { Flex } from "@/lib/elements";
 import { Blog } from "@/lib/types";
 import theme from "@/theme";
-import { Box, Button, Chip, Typography } from "@mui/material";
+import { Box, Button, Chip, IconButton, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
@@ -22,16 +23,22 @@ const BlogList = () => {
 
     if (response.ok) {
       const db_blogs = await response.json();
-      setBlogs(
-        db_blogs.map((blog: Blog) => {
-          return {
-            title: blog.title,
-            content: blog.content,
-            tags: blog.tags,
-            images: blog.images,
-          };
-        })
-      );
+      setBlogs(db_blogs as Blog[]);
+    } else {
+      alert("Something went wrong!");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const response = await fetch(`/api/blogs/?id=${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      setBlogs(blogs.filter((blog) => blog._id != id));
     } else {
       alert("Something went wrong!");
     }
@@ -58,7 +65,14 @@ const BlogList = () => {
             padding="1rem"
             marginBottom="1rem"
             flexDirection="column"
+            position="relative"
           >
+            <IconButton
+              onClick={() => handleDelete(blog._id)}
+              style={{ position: "absolute", top: "0.25rem", right: "0.5rem" }}
+            >
+              <CloseIcon />
+            </IconButton>
             <Flex>
               <Typography variant="body1">Title:</Typography>
               <Typography variant="body1" marginLeft="0.25rem" fontWeight={500}>

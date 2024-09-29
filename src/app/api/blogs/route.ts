@@ -1,4 +1,5 @@
 import clientPromise from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (req: NextRequest) => {
@@ -32,10 +33,24 @@ export const GET = async () => {
       .find({})
       .sort({ _id: -1 }) // 1 for asc and -1 for desc -- newest addition first
       .toArray();
-    
+
     return NextResponse.json(blogs);
-    
   } catch (e) {
     console.error(e);
+  }
+};
+
+export const DELETE = async (req: NextRequest) => {
+  const blog_id = req.nextUrl.searchParams.get("id");
+  if (!blog_id) return NextResponse.json({ message: "id is missing" });
+
+  try {
+    const client = await clientPromise;
+    const database = client.db("sample_mflix"); // Using sample database
+    database.collection("blogs").deleteOne({ _id: new ObjectId(blog_id) });
+
+    return NextResponse.json({ message: "Blog successfully deleted!" });
+  } catch (error) {
+    console.error(error);
   }
 };
